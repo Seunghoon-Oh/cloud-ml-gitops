@@ -1,0 +1,84 @@
+controller:
+  tag: 2.375.2
+  containerEnv:
+    - name: PROJECT_ID
+      valueFrom:
+        secretKeyRef:
+            name: jenkins-k8s-config
+            key: project_id
+    - name: jenkins_tf_ksa
+      valueFrom:
+        secretKeyRef:
+            name: jenkins-k8s-config
+            key: jenkins_tf_ksa
+  servicePort: 80
+  serviceType: LoadBalancer
+  installPlugins:
+    - github:1.37.0
+    - git:5.0.2
+    - kubernetes:3883.v4d70a_a_a_df034
+    - workflow-aggregator:590.v6a_d052e5a_a_b_5
+    - configuration-as-code:1625.v27444588cc3d
+    - blueocean:1.27.1
+    - docker-workflow:1.29 
+  JCasC:
+    enabled: true
+    configScripts:
+        cloud: |
+            jenkins:
+                clouds:
+                    - kubernetes:
+                        name: "gke-executors"
+                        serverUrl: "https://kubernetes.default"
+                        jenkinsTunnel: "jenkins-agent:50000"
+                        jenkinsUrl: "http://jenkins:80"
+                        skipTlsVerify: true
+                        namespace: "default"
+                        templates:
+                            - name: "jenkins-jnlp"
+                              namespace: "default"
+                              nodeUsageMode: NORMAL
+                              label: "jnlp-exec"
+                              containers:
+                                - name: "jnlp"
+                                  image: "jenkins/jnlp-slave"
+                                  alwaysPullImage: false
+                                  workingDir: "/home/jenkins/agent"
+                                  ttyEnabled: true
+                                  command: ""
+                                  args: ""
+                                  resourceRequestCpu: "500m"
+                                  resourceLimitCpu: "1000m"
+                                  resourceRequestMemory: "1Gi"
+                                  resourceLimitMemory: "2Gi"
+                              volumes:
+                                - emptyDirVolume:
+                                    memory: false
+                                    mountPath: "/tmp"
+                              idleMinutes: "1"
+                              activeDeadlineSeconds: "2500"
+                              slaveConnectTimeout: "3000"
+                            - name: "terraform"
+                              namespace: "default"
+                              nodeUsageMode: NORMAL
+                              serviceAccount: ${jenkins_tf_ksa}
+                              label: "terraform-exec"
+                              containers:
+                                - name: "terraform"
+                                  image: "hashicorp/terraform:1.3.7"
+                                  alwaysPullImage: false
+                                  workingDir: "/home/jenkins/agent"
+                                  ttyEnabled: true
+                                  command: "/bin/sh -c"
+                                  args: "cat"
+                                  resourceRequestCpu: "1000m"
+                                  resourceLimitCpu: "4000m"
+                                  resourceRequestMemory: "2Gi"
+                                  resourceLimitMemory: "8Gi"
+                              volumes:
+                                - emptyDirVolume:
+                                    memory: false
+                                    mountPath: "/tmp"
+                              podRetention: "never"
+                              activeDeadlineSeconds: "2500"
+                              slaveConnectTimeout: "3000"

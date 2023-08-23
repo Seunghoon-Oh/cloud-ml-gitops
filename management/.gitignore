@@ -1,0 +1,3 @@
+.terraform/
+*.bak
+*.lock.hcl
