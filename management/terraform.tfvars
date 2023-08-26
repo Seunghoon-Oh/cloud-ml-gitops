@@ -1,0 +1,11 @@
+project_id             = "architect-certification-289902"
+class_id               = "architect23"
+member_id              = "32845"
+region                 = "asia-northeast3"
+zones                  = ["asia-northeast3-a"]
+ip_range_pods_name     = "ip-range-pods"
+ip_range_services_name = "ip-range-svc"
+network_name           = "mgmt-vpc-2301-25"
+subnet_ip              = "10.10.10.0/24"
+subnet_name            = "mgmt-subnet-2301-25"
+jenkins_k8s_config     = "jenkins-k8s-config"
