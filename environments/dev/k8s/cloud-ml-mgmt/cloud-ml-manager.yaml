@@ -64,7 +64,7 @@ spec:
           securityContext:
             {}
           image: "steveoh2/cloud-ml-manager:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8082
@@ -72,11 +72,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8082
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8082
           resources:
             {}
 ---
