@@ -63,3 +63,43 @@ resource "kubernetes_namespace" "cloud-ml" {
     name = "cloud-ml"
   }
 }
+
+resource "kubernetes_namespace" "cloud-ml-mgmt" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "cloud-ml-mgmt"
+  }
+}
+
+resource "kubernetes_namespace" "cloud-ml-studio" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "cloud-ml-studio"
+  }
+}
+
+resource "kubernetes_namespace" "cloud-ml-notebook" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "cloud-ml-notebook"
+  }
+}
+
+resource "kubernetes_namespace" "cloud-ml-pipeline" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "cloud-pipeline"
+  }
+}
