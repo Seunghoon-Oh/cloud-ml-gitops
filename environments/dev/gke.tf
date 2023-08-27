@@ -100,6 +100,6 @@ resource "kubernetes_namespace" "cloud-ml-pipeline" {
     labels         = {
       istio-injection = "enabled"
     }
-    name = "cloud-pipeline"
+    name = "cloud-ml-pipeline"
   }
 }
