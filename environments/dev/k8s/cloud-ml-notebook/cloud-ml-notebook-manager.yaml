@@ -1,24 +1,24 @@
 ---
-# Source: cloud-ml-notebook/templates/serviceaccount.yaml
+# Source: cloud-ml-notebook-manager/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cloud-ml-notebook
+  name: cloud-ml-notebook-manager
   labels:
-    helm.sh/chart: cloud-ml-notebook-0.1.0
-    app.kubernetes.io/name: cloud-ml-notebook
+    helm.sh/chart: cloud-ml-notebook-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-notebook-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: cloud-ml-notebook/templates/service.yaml
+# Source: cloud-ml-notebook-manager/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: cloud-ml-notebook
+  name: cloud-ml-notebook-manager
   labels:
-    helm.sh/chart: cloud-ml-notebook-0.1.0
-    app.kubernetes.io/name: cloud-ml-notebook
+    helm.sh/chart: cloud-ml-notebook-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-notebook-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
@@ -30,17 +30,17 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: cloud-ml-notebook
+    app.kubernetes.io/name: cloud-ml-notebook-manager
     app.kubernetes.io/instance: dev
 ---
-# Source: cloud-ml-notebook/templates/deployment.yaml
+# Source: cloud-ml-notebook-manager/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloud-ml-notebook
+  name: cloud-ml-notebook-manager
   labels:
-    helm.sh/chart: cloud-ml-notebook-0.1.0
-    app.kubernetes.io/name: cloud-ml-notebook
+    helm.sh/chart: cloud-ml-notebook-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-notebook-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
@@ -48,19 +48,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: cloud-ml-notebook
+      app.kubernetes.io/name: cloud-ml-notebook-manager
       app.kubernetes.io/instance: dev
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: cloud-ml-notebook
+        app.kubernetes.io/name: cloud-ml-notebook-manager
         app.kubernetes.io/instance: dev
     spec:
-      serviceAccountName: cloud-ml-notebook
+      serviceAccountName: cloud-ml-notebook-manager
       securityContext:
         {}
       containers:
-        - name: cloud-ml-notebook
+        - name: cloud-ml-notebook-manager
           securityContext:
             {}
           image: "nginx:1.16.0"

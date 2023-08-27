@@ -1,24 +1,24 @@
 ---
-# Source: cloud-ml-pipeline/templates/serviceaccount.yaml
+# Source: cloud-ml-pipeline-manager/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cloud-ml-pipeline
+  name: cloud-ml-pipeline-manager
   labels:
-    helm.sh/chart: cloud-ml-pipeline-0.1.0
-    app.kubernetes.io/name: cloud-ml-pipeline
+    helm.sh/chart: cloud-ml-pipeline-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-pipeline-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: cloud-ml-pipeline/templates/service.yaml
+# Source: cloud-ml-pipeline-manager/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: cloud-ml-pipeline
+  name: cloud-ml-pipeline-manager
   labels:
-    helm.sh/chart: cloud-ml-pipeline-0.1.0
-    app.kubernetes.io/name: cloud-ml-pipeline
+    helm.sh/chart: cloud-ml-pipeline-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-pipeline-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
@@ -30,17 +30,17 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: cloud-ml-pipeline
+    app.kubernetes.io/name: cloud-ml-pipeline-manager
     app.kubernetes.io/instance: dev
 ---
-# Source: cloud-ml-pipeline/templates/deployment.yaml
+# Source: cloud-ml-pipeline-manager/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloud-ml-pipeline
+  name: cloud-ml-pipeline-manager
   labels:
-    helm.sh/chart: cloud-ml-pipeline-0.1.0
-    app.kubernetes.io/name: cloud-ml-pipeline
+    helm.sh/chart: cloud-ml-pipeline-manager-0.1.0
+    app.kubernetes.io/name: cloud-ml-pipeline-manager
     app.kubernetes.io/instance: dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
@@ -48,19 +48,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: cloud-ml-pipeline
+      app.kubernetes.io/name: cloud-ml-pipeline-manager
       app.kubernetes.io/instance: dev
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: cloud-ml-pipeline
+        app.kubernetes.io/name: cloud-ml-pipeline-manager
         app.kubernetes.io/instance: dev
     spec:
-      serviceAccountName: cloud-ml-pipeline
+      serviceAccountName: cloud-ml-pipeline-manager
       securityContext:
         {}
       containers:
-        - name: cloud-ml-pipeline
+        - name: cloud-ml-pipeline-manager
           securityContext:
             {}
           image: "nginx:1.16.0"
