@@ -63,11 +63,11 @@ spec:
         - name: cloud-ml-manager
           securityContext:
             {}
-          image: "nginx:1.16.0"
+          image: "steveoh2/cloud-ml-manager:latest"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8082
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -97,4 +97,4 @@ spec:
           service:
             name: cloud-ml-manager
             port:
-              number: 80
+              number: 8082
