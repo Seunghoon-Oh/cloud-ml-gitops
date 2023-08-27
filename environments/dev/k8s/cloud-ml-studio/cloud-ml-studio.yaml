@@ -1,0 +1,81 @@
+---
+# Source: cloud-ml-studio/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-ml-studio
+  labels:
+    helm.sh/chart: cloud-ml-studio-0.1.0
+    app.kubernetes.io/name: cloud-ml-studio
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: cloud-ml-studio/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-ml-studio
+  labels:
+    helm.sh/chart: cloud-ml-studio-0.1.0
+    app.kubernetes.io/name: cloud-ml-studio
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: cloud-ml-studio
+    app.kubernetes.io/instance: dev
+---
+# Source: cloud-ml-studio/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-ml-studio
+  labels:
+    helm.sh/chart: cloud-ml-studio-0.1.0
+    app.kubernetes.io/name: cloud-ml-studio
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloud-ml-studio
+      app.kubernetes.io/instance: dev
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloud-ml-studio
+        app.kubernetes.io/instance: dev
+    spec:
+      serviceAccountName: cloud-ml-studio
+      securityContext:
+        {}
+      containers:
+        - name: cloud-ml-studio
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
