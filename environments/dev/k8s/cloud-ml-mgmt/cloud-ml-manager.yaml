@@ -95,8 +95,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: "cloud-ml.io"
-    http:
+  - http:
       paths:
       - path: /api/cloud-ml-manager
         pathType: Prefix
