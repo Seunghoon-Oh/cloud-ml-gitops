@@ -63,7 +63,7 @@ spec:
         - name: cloud-ml-notebook-manager
           securityContext:
             {}
-          image: "steveoh2/cloud-ml-notebookmanager:latest"
+          image: "steveoh2/cloud-ml-notebook-manager:latest"
           imagePullPolicy: Always
           ports:
             - name: http
