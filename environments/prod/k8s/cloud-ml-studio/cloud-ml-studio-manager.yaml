@@ -25,7 +25,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 80
+    - port: 8082
       targetPort: http
       protocol: TCP
       name: http
@@ -63,11 +63,11 @@ spec:
         - name: cloud-ml-studio-manager
           securityContext:
             {}
-          image: "nginx:1.16.0"
-          imagePullPolicy: IfNotPresent
+          image: "steveoh2/cloud-ml-studio-manager:latest"
+          imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8082
               protocol: TCP
           livenessProbe:
             httpGet:
