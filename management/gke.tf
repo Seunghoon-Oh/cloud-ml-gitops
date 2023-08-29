@@ -27,7 +27,7 @@ module "mgmt-gke-cluster" {
       min_count    = 1
       max_count    = 3
       auto_upgrade = true
-      machine_type = "n1-standard-8"
+      machine_type = "e2-standard-4"
     }
   ]
 }
