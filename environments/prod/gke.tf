@@ -103,3 +103,13 @@ resource "kubernetes_namespace" "cloud-ml-pipeline" {
     name = "cloud-ml-pipeline"
   }
 }
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "monitoring"
+  }
+}
