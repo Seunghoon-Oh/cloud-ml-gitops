@@ -1,0 +1,106 @@
+---
+# Source: cloud-ml-foo-subscriber/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-ml-foo-subscriber
+  labels:
+    helm.sh/chart: cloud-ml-foo-subscriber-0.1.0
+    app.kubernetes.io/name: cloud-ml-foo-subscriber
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: cloud-ml-foo-subscriber/templates/service.yaml
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: cloud-ml-foo-subscriber
+#   labels:
+#     helm.sh/chart: cloud-ml-foo-subscriber-0.1.0
+#     app.kubernetes.io/name: cloud-ml-foo-subscriber
+#     app.kubernetes.io/instance: dev
+#     app.kubernetes.io/version: "1.16.0"
+#     app.kubernetes.io/managed-by: Helm
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 8082
+#       targetPort: http
+#       protocol: TCP
+#       name: http
+#   selector:
+#     app.kubernetes.io/name: cloud-ml-foo-subscriber
+#     app.kubernetes.io/instance: dev
+---
+# Source: cloud-ml-foo-subscriber/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-ml-foo-subscriber
+  labels:
+    helm.sh/chart: cloud-ml-foo-subscriber-0.1.0
+    app.kubernetes.io/name: cloud-ml-foo-subscriber
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloud-ml-foo-subscriber
+      app.kubernetes.io/instance: dev
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloud-ml-foo-subscriber
+        app.kubernetes.io/instance: dev
+    spec:
+      serviceAccountName: cloud-ml-foo-subscriber
+      securityContext:
+        {}
+      containers:
+        - name: cloud-ml-foo-subscriber
+          securityContext:
+            {}
+          image: "steveoh2/cloud-ml-foo-subscriber:latest"
+          imagePullPolicy: Always
+          # ports:
+          #   - name: http
+          #     containerPort: 8082
+          #     protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cloud-ml-foo-subscriber
+  namespace: cloud-ml-foo
+spec:
+  maxReplicas: 10
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 75
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cloud-ml-foo-subscriber
