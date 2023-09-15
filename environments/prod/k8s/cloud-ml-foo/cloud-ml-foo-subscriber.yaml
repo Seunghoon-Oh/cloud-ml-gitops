@@ -11,28 +11,6 @@ metadata:
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: cloud-ml-foo-subscriber/templates/service.yaml
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: cloud-ml-foo-subscriber
-#   labels:
-#     helm.sh/chart: cloud-ml-foo-subscriber-0.1.0
-#     app.kubernetes.io/name: cloud-ml-foo-subscriber
-#     app.kubernetes.io/instance: dev
-#     app.kubernetes.io/version: "1.16.0"
-#     app.kubernetes.io/managed-by: Helm
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - port: 8082
-#       targetPort: http
-#       protocol: TCP
-#       name: http
-#   selector:
-#     app.kubernetes.io/name: cloud-ml-foo-subscriber
-#     app.kubernetes.io/instance: dev
----
 # Source: cloud-ml-foo-subscriber/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -59,6 +37,8 @@ spec:
       serviceAccountName: cloud-ml-foo-subscriber
       securityContext:
         {}
+      nodeSelector:
+        cloud-ml: product
       containers:
         - name: cloud-ml-foo-subscriber
           securityContext:

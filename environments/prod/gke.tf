@@ -42,7 +42,8 @@ resource "google_container_node_pool" "primary_nodes" {
     ]
   
     labels = {
-      env = var.project_id
+      env = var.project_id, 
+      cloud-ml = "management"
     }
   
     # preemptible  = true
@@ -72,7 +73,7 @@ resource "google_container_node_pool" "product_nodes" {
   
     labels = {
       env = var.project_id, 
-      cloud-ml = "product "
+      cloud-ml = "product"
     }
   
     # preemptible  = true

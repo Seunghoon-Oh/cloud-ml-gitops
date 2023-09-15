@@ -59,6 +59,8 @@ spec:
       serviceAccountName: cloud-ml-manager
       securityContext:
         {}
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: cloud-ml-manager
           securityContext:

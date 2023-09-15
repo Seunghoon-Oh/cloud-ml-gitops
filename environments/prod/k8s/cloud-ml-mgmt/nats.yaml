@@ -119,6 +119,8 @@ spec:
         app: nats-box
     spec:
       volumes:
+      nodeSelector:
+        cloud-ml: management
       containers:
       - name: nats-box
         image: natsio/nats-box:0.13.8
