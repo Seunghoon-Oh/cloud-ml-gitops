@@ -55,11 +55,11 @@ resource "google_container_node_pool" "primary_nodes" {
 }
 
 # Separately Managed Cloud ML Prooduct Node Pool
-resource "google_container_node_pool" "prooduct_nodes" {
+resource "google_container_node_pool" "product_nodes" {
   name       = "${google_container_cluster.primary.name}-prooduct-np"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = var.prooduct_gke_num_nodes
+  node_count = var.product_gke_num_nodes
   
   node_config {
     oauth_scopes = [
