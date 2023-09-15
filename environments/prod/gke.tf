@@ -54,12 +54,12 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
-# Separately Managed Cloud ML Notebook Node Pool
-resource "google_container_node_pool" "notebook_nodes" {
-  name       = "${google_container_cluster.primary.name}-notebook-np"
+# Separately Managed Cloud ML Prooduct Node Pool
+resource "google_container_node_pool" "prooduct_nodes" {
+  name       = "${google_container_cluster.primary.name}-prooduct-np"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = var.notebook_gke_num_nodes
+  node_count = var.prooduct_gke_num_nodes
   
   node_config {
     oauth_scopes = [
@@ -72,7 +72,7 @@ resource "google_container_node_pool" "notebook_nodes" {
   
     labels = {
       env = var.project_id, 
-      cloud-ml-product = "notebook"
+      cloud-ml = "product "
     }
   
     # preemptible  = true

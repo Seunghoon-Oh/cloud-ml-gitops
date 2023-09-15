@@ -36,9 +36,9 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
-variable "notebook_gke_num_nodes" {
+variable "product_gke_num_nodes" {
   default     = 1
-  description = "number of gke notebook nodes"
+  description = "number of gke product nodes"
 }
 
 variable "machine_type" {
