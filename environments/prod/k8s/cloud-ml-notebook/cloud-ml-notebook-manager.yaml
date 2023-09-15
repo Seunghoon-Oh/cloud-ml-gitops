@@ -59,6 +59,8 @@ spec:
       serviceAccountName: cloud-ml-notebook-manager
       securityContext:
         {}
+      nodeSelector:
+        cloud-ml: product
       containers:
         - name: cloud-ml-notebook-manager
           securityContext:

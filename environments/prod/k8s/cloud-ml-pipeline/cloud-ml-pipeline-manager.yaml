@@ -59,6 +59,8 @@ spec:
       serviceAccountName: cloud-ml-pipeline-manager
       securityContext:
         {}
+      nodeSelector:
+        cloud-ml: product
       containers:
         - name: cloud-ml-pipeline-manager
           securityContext:
