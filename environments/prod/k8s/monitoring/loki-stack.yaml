@@ -313,6 +313,8 @@ spec:
       securityContext:
         runAsGroup: 0
         runAsUser: 0
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: promtail
           image: "docker.io/grafana/promtail:2.8.3"
@@ -417,6 +419,8 @@ spec:
         runAsUser: 10001
       initContainers:
         []
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: loki
           image: "grafana/loki:2.6.1"

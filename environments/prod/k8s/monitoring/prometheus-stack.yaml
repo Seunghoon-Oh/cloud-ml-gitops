@@ -1251,6 +1251,8 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: prometheus-prometheus-node-exporter
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: node-exporter
           image: quay.io/prometheus/node-exporter:v1.6.1
@@ -1365,6 +1367,8 @@ spec:
         runAsNonRoot: true
         runAsUser: 472
       enableServiceLinks: true
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: grafana-sc-dashboard
           image: "quay.io/kiwigrid/k8s-sidecar:1.25.1"
@@ -1570,6 +1574,8 @@ spec:
         runAsUser: 65534
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        cloud-ml: management
       containers:
       - name: kube-state-metrics
         args:
@@ -1634,6 +1640,8 @@ spec:
         release: "prometheus"
         heritage: "Helm"
     spec:
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: kube-prometheus-stack
           image: "quay.io/prometheus-operator/prometheus-operator:v0.68.0"
@@ -5458,6 +5466,8 @@ metadata:
   namespace: monitoring
 spec:
   serviceAccountName: prometheus-grafana-test
+  nodeSelector:
+        cloud-ml: management
   containers:
     - name: prometheus-test
       image: "docker.io/bats/bats:v1.4.1"
@@ -5505,6 +5515,8 @@ spec:
         release: "prometheus"
         heritage: "Helm"
     spec:
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: create
           image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6
@@ -5564,6 +5576,8 @@ spec:
         release: "prometheus"
         heritage: "Helm"
     spec:
+      nodeSelector:
+        cloud-ml: management
       containers:
         - name: patch
           image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6
