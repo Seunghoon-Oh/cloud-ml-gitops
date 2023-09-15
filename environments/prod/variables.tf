@@ -36,11 +36,15 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
+variable "notebook_gke_num_nodes" {
+  default     = 1
+  description = "number of gke notebook nodes"
+}
+
 variable "machine_type" {
   default     = "n1-standard-1"
   description = "Node pool machine type"
 }
-
 
 data "google_client_config" "default" {
 }

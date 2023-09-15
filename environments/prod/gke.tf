@@ -53,6 +53,37 @@ resource "google_container_node_pool" "primary_nodes" {
     }
   }
 }
+
+# Separately Managed Cloud ML Notebook Node Pool
+resource "google_container_node_pool" "primary_nodes" {
+  name       = "${google_container_cluster.primary.name}-notebook-np"
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = var.notebook_gke_num_nodes
+  
+  node_config {
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/trace.append",
+      "https://www.googleapis.com/auth/devstorage.read_only"
+    ]
+  
+    labels = {
+      env = var.project_id, 
+      cloud-ml-product = "notebook"
+    }
+  
+    # preemptible  = true
+    machine_type = var.machine_type
+    tags         = ["gke-node", "${var.environment}-${var.class_id}-${var.member_id}"]
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+  }
+}
+  
   
 resource "kubernetes_namespace" "cloud-ml" {
   metadata {
