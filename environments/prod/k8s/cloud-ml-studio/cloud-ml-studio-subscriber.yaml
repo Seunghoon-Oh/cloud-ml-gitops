@@ -1,5 +1,4 @@
 ---
-# Source: cloud-ml-studio-subscriber/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -11,29 +10,6 @@ metadata:
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: cloud-ml-studio-subscriber/templates/service.yaml
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: cloud-ml-studio-subscriber
-#   labels:
-#     helm.sh/chart: cloud-ml-studio-subscriber-0.1.0
-#     app.kubernetes.io/name: cloud-ml-studio-subscriber
-#     app.kubernetes.io/instance: dev
-#     app.kubernetes.io/version: "1.16.0"
-#     app.kubernetes.io/managed-by: Helm
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - port: 8082
-#       targetPort: http
-#       protocol: TCP
-#       name: http
-#   selector:
-#     app.kubernetes.io/name: cloud-ml-studio-subscriber
-#     app.kubernetes.io/instance: dev
----
-# Source: cloud-ml-studio-subscriber/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
