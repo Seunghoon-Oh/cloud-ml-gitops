@@ -1,5 +1,3 @@
----
-# Source: loki-stack/charts/loki/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -14,7 +12,6 @@ metadata:
   namespace: monitoring
 automountServiceAccountToken: true
 ---
-# Source: loki-stack/charts/promtail/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -27,7 +24,6 @@ metadata:
     app.kubernetes.io/version: "2.8.3"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: loki-stack/charts/loki/templates/secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
