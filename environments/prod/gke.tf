@@ -136,6 +136,17 @@ resource "kubernetes_namespace" "cloud-ml-pipeline" {
   }
 }
 
+resource "kubernetes_namespace" "cloud-ml-experiments" {
+  metadata {
+    annotations    = {}
+    labels         = {
+      istio-injection = "enabled"
+    }
+    name = "cloud-ml-experiments"
+  }
+}
+
+
 resource "kubernetes_namespace" "monitoring" {
   metadata {
     annotations    = {}
